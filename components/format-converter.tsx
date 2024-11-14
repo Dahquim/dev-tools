@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FileJson, Copy, Download, Upload, RotateCcw, Maximize2, Minimize2 } from "lucide-react";
+import {FileJson, Copy, Download, Upload, RotateCcw, Maximize2, Minimize2, AlertCircle} from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Format, Mode, convertFormat, validateAndFormat, validateFormat } from "@/lib/converter";
@@ -17,7 +17,7 @@ export function FormatConverter() {
     const [mode, setMode] = useState<Mode>("validate");
     const [inputFormat, setInputFormat] = useState<Format>("json");
     const [outputFormat, setOutputFormat] = useState<Format>("yaml");
-    const [isFullScreen, setIsFullScreen] = useState(false);
+    const [isFullScreen, setIsFullScreen] = useState(true);
 
     const handleProcess = () => {
         try {
@@ -91,8 +91,8 @@ export function FormatConverter() {
     };
 
     return (
-        <main className={cn("min-h-screen bg-base-300", isFullScreen ? "p-0" : "p-4 sm:p-8")}>
-            <div className={cn("mx-auto space-y-8",isFullScreen ? "max-w-none" : "max-w-3xl")}>
+        <main className={cn("min-h-screen bg-base-100", isFullScreen ? "p-0" : "p-4 sm:p-8")}>
+            <div className={cn("mx-auto space-y-8", isFullScreen ? "max-w-none" : "max-w-3xl")}>
                 {!isFullScreen && (
                     <div className="text-center space-y-4">
                         <div className="flex items-center justify-center gap-3">
@@ -102,7 +102,7 @@ export function FormatConverter() {
                         <p>Validate, format, and convert between JSON and YAML</p>
                     </div>
                 )}
-                <Card className={cn("space-y-4",isFullScreen ? "rounded-none min-h-screen" : "p-4")}>
+                <Card className={cn("space-y-4 bg-base-300", isFullScreen ? "rounded-none min-h-screen" : "p-4")}>
                     <div className="flex flex-col gap-0 p-4">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-4">
@@ -115,17 +115,6 @@ export function FormatConverter() {
                                 <ModeToggle mode={mode} onChange={setMode} />
                             </div>
                             <div className="flex gap-2">
-                                <Button
-                                    variant="outline"
-                                    onClick={() => setIsFullScreen(!isFullScreen)}
-                                    title={isFullScreen ? "Exit full screen" : "Enter full screen"}
-                                >
-                                    {isFullScreen ? (
-                                        <Minimize2 className="h-4 w-4" />
-                                    ) : (
-                                        <Maximize2 className="h-4 w-4" />
-                                    )}
-                                </Button>
                                 <Button
                                     variant="outline"
                                     onClick={() => {
@@ -203,14 +192,7 @@ export function FormatConverter() {
                             </div>
                         )}
                     </div>
-                    {error && (
-                        <div className="px-4">
-                            <div className="p-4 bg-destructive/10 text-destructive rounded-md">
-                                {error}
-                            </div>
-                        </div>
-                    )}
-                    <div className={cn("relative",isFullScreen ? "h-[calc(100vh-16rem)]" : "min-h-[500px]")}>
+                    <div className={cn("relative",isFullScreen ? "h-[calc(100vh-64rem)]" : "min-h-[500px]")}>
                         <Textarea
                             placeholder={`Paste your ${inputFormat.toUpperCase()} here...`}
                             className={cn("absolute inset-0 font-mono mx-4 resize-none", error ? "border-red-500" : "")}
